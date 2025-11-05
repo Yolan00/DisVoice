@@ -25,6 +25,36 @@ from script_mananger import script_manager
 import torch
 from tqdm import tqdm
 
+def _install_keras3_compile_shim():
+    try:
+        try:
+            import keras as _k1
+        except Exception:
+            _k1 = None
+        try:
+            from tensorflow import keras as _k2
+        except Exception:
+            _k2 = None
+        for _k in (_k1, _k2):
+            if _k is None:
+                continue
+            Model = getattr(_k, "Model", None)
+            if not Model:
+                continue
+            if getattr(Model, "_compile_shim_installed", False):
+                continue
+            _orig = Model.compile
+            def _shim(self, *args, **kwargs):
+                kwargs.pop("sample_weight_mode", None)
+                return _orig(self, *args, **kwargs)
+            Model.compile = _shim
+            Model._compile_shim_installed = True
+    except Exception:
+        pass
+
+_install_keras3_compile_shim()
+
+
 class Phonological:
     """
     Compute phonological features from continuous speech files.
