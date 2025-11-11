@@ -14,6 +14,14 @@ Outputs:
 - features_out/out_<family>.json
 
 Python 3.13.9 • Ubuntu • VS Code
+
+
+To run:
+- from repo root -> python extract_all_features.py </path/to/audios> -o ./features_out
+
+To run only selected features extraction:
+- python extract_all_features.py </path/to/audios> --include glottal phonation articulation prosody...
+
 """
 
 from __future__ import annotations

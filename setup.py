@@ -5,18 +5,33 @@ except ImportError:
 import pathlib
 
 install_requires = [
-                    'kaldi_io',
-                    'tqdm',
-                    'matplotlib',
-                    'numpy',
-                    'torch',
-                    'librosa',
-                    'pandas',
-                    'pysptk',
-                    'phonet',
-                    'scipy',
-                    'scikit_learn',
-                    ]
+    # Core scientific stack
+    "numpy>=2.3.0",
+    "pandas>=2.3.0",
+    "scipy>=1.16.0",
+    "scikit-learn>=1.7.0",
+
+    # Audio I/O & processing
+    "librosa>=0.10.0",
+    "soundfile>=0.12.0",
+    "soxr>=1.0.0",
+    "pysptk>=1.0.1",
+    "python_speech_features>=0.6",
+    "kaldi-io>=0.9.8",
+    "tqdm>=4.66.0",
+
+    # Visualization used in notebooks/examples
+    "matplotlib>=3.8",
+
+    # Neural backends / feature families
+    "tensorflow>=2.20.0",      # for Phonological + RepLearning
+    "torch>=2.2.0",            # phonet depends on torch; keep a reasonable floor
+    "phonet>=0.3.7",           # Phonological features
+
+    # Praat backend (recommended) for Phonation
+    "praat-parselmouth>=0.4.5",
+]
+
 
 HERE = pathlib.Path(__file__).parent
 LONG_DESCRIPTION = (HERE / "README.md").read_text()
